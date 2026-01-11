@@ -8,6 +8,7 @@ import (
 	"os/exec"
 	"strings"
 
+	"github.com/ArttuOll/gosh/internal/builtin"
 	"github.com/spf13/cobra"
 )
 
@@ -25,8 +26,9 @@ func Run(cmd *cobra.Command, args []string) {
 		command := parts[0]
 		arguments := parts[1:]
 
-		if command == "exit" {
-			os.Exit(0)
+		if builtin.IsBuiltInCommand(command) {
+			builtin.EvaluateBuiltInCommand(command, arguments)
+			continue
 		}
 
 		cmd := exec.Command(command, arguments...)
