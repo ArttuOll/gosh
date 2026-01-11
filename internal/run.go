@@ -27,7 +27,11 @@ func Run(cmd *cobra.Command, args []string) {
 		arguments := parts[1:]
 
 		if builtin.IsBuiltInCommand(command) {
-			builtin.EvaluateBuiltInCommand(command, arguments)
+			err := builtin.EvaluateBuiltInCommand(command, arguments)
+			if err != nil {
+				fmt.Println(err)
+			}
+
 			continue
 		}
 
